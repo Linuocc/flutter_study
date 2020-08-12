@@ -18,20 +18,69 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ContentWidget extends StatelessWidget {
+class ContentWidget extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Center(child: TextWidget());
+  State<StatefulWidget> createState() {
+    return ContentWidgetState();
   }
 }
 
-class TextWidget extends StatelessWidget {
+class ContentWidgetState extends State<ContentWidget> {
+  int counter = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "Hello World",
-      textDirection: TextDirection.ltr,
-      style: TextStyle(fontSize: 30, color: Colors.orange),
-    );
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RaisedButton(
+                color: Colors.orange,
+                child: Text("计数-1"),
+                onPressed: () {
+                  setState(() {
+                    counter--;
+                  });
+                }),
+            RaisedButton(
+                color: Colors.green,
+                child: Text("计数+1"),
+                onPressed: () {
+                  setState(() {
+                    counter++;
+                  });
+                }),
+          ],
+        ),
+        Text(
+          "当前计数：$counter",
+          style: TextStyle(fontSize: 25),
+        ),
+      ],
+    ));
   }
 }
+
+//class ContentWidget extends StatelessWidget {
+//  int counter = 0;
+//  @override
+//  Widget build(BuildContext context) {
+//    return Center(
+//        child: Column(
+//          mainAxisAlignment: MainAxisAlignment.center,
+//          children: <Widget>[
+//            RaisedButton(child:Text("计数+1"),onPressed:(){
+//              print("按钮点击");
+//              counter++;
+//            }),
+//            Text(
+//              "当前计数：$counter",
+//              style: TextStyle(fontSize: 25),
+//            ),
+//          ],
+//        ));
+//  }
+//}
