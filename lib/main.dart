@@ -23,15 +23,175 @@ class MyApp extends StatelessWidget {
 class ContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    return LoginWidget();
+  }
+}
+
+//表单widget
+class LoginWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return LoginState();
+  }
+}
+
+class LoginState extends State<LoginWidget> {
+  String username;
+  String password;
+
+  GlobalKey<FormState> formGlobalKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Form(
+        key: formGlobalKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextFormField(
+                autovalidate: true,
+                decoration:
+                    InputDecoration(icon: Icon(Icons.people), labelText: "用户名"),
+                onSaved: (value){
+                  this.username = value;
+                },
+                validator: (value){
+                  if(value==null||value.length==0){
+                    return "用户名不能为空";
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                autovalidate: true,
+                obscureText: true,
+                decoration:
+                    InputDecoration(icon: Icon(Icons.lock), labelText: "密码"),
+                onSaved: (value){
+                  this.password = value;
+                },
+                validator: (value){
+                  if(value==null||value.length==0){
+                    return "密码不能为空";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 12,),
+              Container(
+                width: double.infinity,
+                height: 44,
+                child: RaisedButton(
+                  color: Colors.blue,
+                    child: Text(
+                      "登录",
+                      style: TextStyle(fontSize: 20,color: Colors.white),
+                    ),
+                    onPressed: () {
+                      formGlobalKey.currentState.save();
+                      print("用户名:$username 密码:$password");
+                    }),
+              )
+            ],
+      )),
+    );
+  }
+}
+
+//输入框widget的使用
+class RegisterWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return RegisterState();
+  }
+}
+
+class RegisterState extends State<RegisterWidget> {
+  final textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    textEditingController.text = "我是默认值";
+    textEditingController.addListener(() {
+      print("监听到值的改变 ${textEditingController.text}");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+              icon: Icon(Icons.people),
+              labelText: "username",
+              hintText: "请输入用户名",
+              border: OutlineInputBorder(borderSide: BorderSide(width: 3)),
+              filled: true,
+//                fillColor: Colors.purple
+            ),
+            onChanged: (value) {
+              print(value);
+            },
+            onSubmitted: (value) {
+              print(value);
+            },
+            controller: textEditingController,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+//圆角图片widget
+class RadiusImageDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Image.network(
+          "https://tva1.sinaimg.cn/large/006y8mN6gy1g7aa03bmfpj3069069mx8.jpg",
+          width: 150,
+          height: 150,
+        ),
+      ),
+    );
+  }
+}
+
+//圆形头像图片widget
+class CircleImageDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ClipOval(
+      child: Image.network(
+        "https://tva1.sinaimg.cn/large/006y8mN6gy1g7aa03bmfpj3069069mx8.jpg",
+        width: 150,
+        height: 150,
+      ),
+    );
+  }
+}
+
+//本地图片widget
+class AssetsImageDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Image.asset("assets/images/img1.jpg");
   }
 }
 
+//网络图片widget
 class NetworkImageDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Center(
         child: Container(
       width: 300,
@@ -46,10 +206,10 @@ class NetworkImageDemo extends StatelessWidget {
   }
 }
 
+//自定义按钮widget
 class CustomButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Center(
       child: RaisedButton(
         color: Colors.red,
@@ -77,10 +237,10 @@ class CustomButtonDemo extends StatelessWidget {
   }
 }
 
+//按钮widget
 class ButtonDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Column(
       children: <Widget>[
         RaisedButton(
@@ -104,10 +264,10 @@ class ButtonDemo extends StatelessWidget {
   }
 }
 
+//文本widget
 class TextRichDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Text.rich(
       TextSpan(children: [
         TextSpan(
@@ -123,10 +283,10 @@ class TextRichDemo extends StatelessWidget {
   }
 }
 
+//文本widget
 class TextDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Text(
       "《定风波》 苏轼 \n莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。",
       style: TextStyle(fontSize: 20, color: Color(0xffff0000)),
